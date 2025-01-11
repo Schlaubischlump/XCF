@@ -52,10 +52,10 @@ build()
     export CXX="$(xcrun --sdk ${SDK} -f clang++) ${CFLAGS}"
     
     if test -f "autogen.sh"; then
-        ./autogen.sh --host=${HOST} ${FLAGS}
+        ./autogen.sh --host=${HOST} ${FLAGS} --enable-static --disable-shared
     else
         ./buildconf
-        ./configure --host=${HOST} ${FLAGS}
+        ./configure --host=${HOST} ${FLAGS} --enable-static --disable-shared
     fi
     make -j ${NUM_CPU}
     make install
@@ -178,6 +178,10 @@ buildProject()
     
     popd > /dev/null
     
+    #if [ -d ${INSTALL_PATH}/install ]; then
+    #    rm -rf ${INSTALL_PATH}/install
+    #fi
+    
     echo "Done building ${NAME}"
 }
 
@@ -233,10 +237,10 @@ buildLibimobiledevice()
     VERSION="master"
     PROJECT="libimobiledevice"
     
-    downloadProject "SchlaubiSchlump" $PROJECT $VERSION
+    downloadProject "libimobiledevice" $PROJECT $VERSION
     
     # download the project
-#    if downloadProject "SchlaubiSchlump" $PROJECT $VERSION ; then
+#    if downloadProject "libimobiledevice" $PROJECT $VERSION ; then
         
         # patch t_math.c to add a missing include for never OpenSSL versions
 #        echo "Patch t_math.c"
